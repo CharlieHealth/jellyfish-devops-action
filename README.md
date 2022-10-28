@@ -10,16 +10,16 @@ Add the following step to your actions workflow. Details on the arguments availa
 steps:
   - uses: CharlieHealth/jellyfish-devops-action@v1
     with:
-      apiToken: 'abc'
-      referenceId: 'xyz'
-      isSuccessful: true
+      apiToken: abc
+      referenceId: xyz
+      isSuccessful: True
       deployedAt: 1234asdf
       repoName: test-repo
       commitShas: |
-        'b56432158'
+        b56432158
       labels: '{"team": "testTeam"}'
-      shouldBackfillCommits: false
-      isDryRun: true
+      shouldBackfillCommits: False
+      isDryRun: True
 
 ```
 
