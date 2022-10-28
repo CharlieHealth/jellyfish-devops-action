@@ -1,22 +1,22 @@
 # GitHub Action for Jellyfish DevOps Metrics Reporting
 
-Use this action to report DevOps metrics to Jellyfish. Based on the [TypeScript Action Template](https://github.com/actions/typescript-action) and the [Jellyfish DevOps Metrics Documentation](https://app.jellyfish.co/docs/devops-metrics/)
+Use this action to report DevOps metrics to Jellyfish. Based on the [TypeScript Action Template](https://github.com/actions/typescript-action) and the [Jellyfish DevOps Metrics Documentation](https://help.jellyfish.co/hc/en-us/articles/9281148741901-Sending-deployment-data-via-the-API-s-Deployment-POST-Endpoint)
 
 ## Using the action
 
-Add the following step to your actions workflow. Details on the arguments available at https://app.jellyfish.co/docs/devops-metrics/
+Add the following step to your actions workflow. Details on the arguments available at https://help.jellyfish.co/hc/en-us/articles/9281148741901-Sending-deployment-data-via-the-API-s-Deployment-POST-Endpoint
 
 ```
 steps:
   - uses: CharlieHealth/jellyfish-devops-action@v1
     with:
-      apiToken: abc
-      referenceId: xyz
+      apiToken: ${{ secrets.JELLYFISH_API_KEY }}
+      referenceId: $GITHUB_SHA
       isSuccessful: True
       deployedAt: 1234asdf
       repoName: test-repo
       commitShas: |
-        b56432158
+        $GITHUB_SHA
       labels: '{"team": "testTeam"}'
       shouldBackfillCommits: False
       isDryRun: True
