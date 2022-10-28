@@ -1,11 +1,39 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Jellyfish DevOps Metrics Reporting'
+description: 'Used to report DevOps metrics to Jellyfish'
+author: 'Charlie Health'
 inputs:
-  milliseconds: # change this
+  apiToken:
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    description: 'Your Jellyfish API Token'
+  referenceId:
+    required: true
+    description: A unique identifier for a deployment, such as a git SHA
+  isSuccessful:
+    required: true
+    description: Indicates if the deployment succesfully landed in production
+  deployedAt:
+    required: true
+    description: The timestamp of deployment completion (UTC)
+  repoName:
+    required: true
+    description: The full name of the origin code repository where the production change originated
+  commitShas:
+    required: false
+    description: A list of full commit SHAs for the code changes in the deployment
+  prs:
+    required: false
+    description: A list of URLs that represent the PRs associated with this deployment
+  labels:
+    required: false
+    description: A JSON formatted list of key value pairs that provide additional metadata about the deployment
+  shouldBackfillCommits:
+    required: false
+    description: When set to true, Jellyfish will infer the commits between this deployment and the previous deployment. Only a single SHA is required in the SHAs field when this flag is set to true
+    default: false
+  isDryRun:
+    required: false
+    description: 'Set to True to test your setup without actually saving events to Jellyfish '
+    default: false
 runs:
   using: 'node16'
   main: 'dist/index.js'

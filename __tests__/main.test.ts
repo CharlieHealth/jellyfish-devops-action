@@ -1,29 +1,32 @@
-import {wait} from '../src/wait'
-import * as process from 'process'
-import * as cp from 'child_process'
-import * as path from 'path'
 import {expect, test} from '@jest/globals'
+import nock from 'nock'
 
-test('throws invalid number', async () => {
-  const input = parseInt('foo', 10)
-  await expect(wait(input)).rejects.toThrow('milliseconds not a number')
-})
-
-test('wait 500 ms', async () => {
-  const start = new Date()
-  await wait(500)
-  const end = new Date()
-  var delta = Math.abs(end.getTime() - start.getTime())
-  expect(delta).toBeGreaterThan(450)
-})
+import {
+  report_deployment,
+  JELLYFISH_BASE_URL,
+  JELLYFISH_DEPLOYMENT_RESOURCE
+} from '../src/main'
 
 // shows how the runner will run a javascript action with env / stdout protocol
-test('test runs', () => {
-  process.env['INPUT_MILLISECONDS'] = '500'
-  const np = process.execPath
-  const ip = path.join(__dirname, '..', 'lib', 'main.js')
-  const options: cp.ExecFileSyncOptions = {
-    env: process.env
+test('test report_deployment function', async () => {
+  const scope = nock(JELLYFISH_BASE_URL)
+    .post('/' + JELLYFISH_DEPLOYMENT_RESOURCE)
+    .reply(200)
+
+  const now = new Date().toUTCString()
+
+  const config = {
+    apiToken: 'abc',
+    referenceId: 'xyz',
+    isSuccessful: true,
+    deployedAt: now,
+    repoName: 'test-repo',
+    commitShas: ['b5d99fe'],
+    shouldBackfillCommits: false,
+    isDryRun: true
   }
-  console.log(cp.execFileSync(np, [ip], options).toString())
+
+  await report_deployment(config)
+
+  expect(scope.done).toBeTruthy()
 })
