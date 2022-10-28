@@ -4,7 +4,7 @@ import axios from 'axios'
 export const JELLYFISH_BASE_URL = 'https://webhooks.jellyfish.co'
 export const JELLYFISH_DEPLOYMENT_RESOURCE = 'deployment'
 
-interface ACTION_CONFIG {
+interface ActionConfig {
   apiToken: string
   referenceId: string
   isSuccessful: boolean
@@ -17,7 +17,17 @@ interface ACTION_CONFIG {
   isDryRun: boolean
 }
 
-export async function report_deployment(config: ACTION_CONFIG): Promise<void> {
+interface RequestBody {
+  reference_id: string
+  is_successful: boolean
+  deployed_at: string
+  repo_name: string
+  commit_shas?: string[]
+  prs?: string[]
+  labels?: JSON
+}
+
+export async function report_deployment(config: ActionConfig): Promise<void> {
   const url = [JELLYFISH_BASE_URL, JELLYFISH_DEPLOYMENT_RESOURCE].join('/')
   const headers: Record<string, string | boolean | number> = {
     'X-jf-api-token': config.apiToken
@@ -31,17 +41,26 @@ export async function report_deployment(config: ACTION_CONFIG): Promise<void> {
     headers['X-jf-api-dry-run'] = config.isDryRun
   }
 
-  const data = {
+  const body: RequestBody = {
     reference_id: config.referenceId,
     is_successful: config.isSuccessful,
     deployed_at: config.deployedAt,
-    repo_name: config.repoName,
-    commit_shas: config.commitShas,
-    prs: config.prs,
-    labels: config.labels
+    repo_name: config.repoName
   }
 
-  await axios.post(url, data, {headers})
+  if (config.commitShas) {
+    body['commit_shas'] = config.commitShas
+  }
+
+  if (config.prs) {
+    body['prs'] = config.prs
+  }
+
+  if (config.labels) {
+    body['labels'] = config.labels
+  }
+
+  await axios.post(url, body, {headers})
 }
 
 async function run(): Promise<void> {

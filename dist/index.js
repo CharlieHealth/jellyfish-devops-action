@@ -55,16 +55,22 @@ function report_deployment(config) {
         if (config.isDryRun) {
             headers['X-jf-api-dry-run'] = config.isDryRun;
         }
-        const data = {
+        const body = {
             reference_id: config.referenceId,
             is_successful: config.isSuccessful,
             deployed_at: config.deployedAt,
-            repo_name: config.repoName,
-            commit_shas: config.commitShas,
-            prs: config.prs,
-            labels: config.labels
+            repo_name: config.repoName
         };
-        yield axios_1.default.post(url, data, { headers });
+        if (config.commitShas) {
+            body['commit_shas'] = config.commitShas;
+        }
+        if (config.prs) {
+            body['prs'] = config.prs;
+        }
+        if (config.labels) {
+            body['labels'] = config.labels;
+        }
+        yield axios_1.default.post(url, body, { headers });
     });
 }
 exports.report_deployment = report_deployment;
