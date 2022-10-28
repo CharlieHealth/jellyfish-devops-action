@@ -12,7 +12,7 @@ interface ActionConfig {
   repoName: string
   commitShas?: string[]
   prs?: string[]
-  labels?: JSON
+  labels?: string[]
   shouldBackfillCommits: boolean
   isDryRun: boolean
 }
@@ -24,7 +24,7 @@ interface RequestBody {
   repo_name: string
   commit_shas?: string[]
   prs?: string[]
-  labels?: JSON
+  labels?: string[]
 }
 
 export async function report_deployment(config: ActionConfig): Promise<void> {
@@ -73,7 +73,7 @@ async function run(): Promise<void> {
       repoName: core.getInput('repoName'),
       commitShas: core.getMultilineInput('commitShas'),
       prs: core.getMultilineInput('prs'),
-      labels: JSON.parse(core.getInput('labels')),
+      labels: core.getMultilineInput('prs'),
       shouldBackfillCommits: core.getBooleanInput('shouldBackfillCommits'),
       isDryRun: core.getBooleanInput('isDryRun')
     }

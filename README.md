@@ -16,7 +16,10 @@ steps:
       repoName: test-repo
       commitShas: |
         $GITHUB_SHA
-      labels: '{"team": "testTeam"}'
+      labels: |
+        team:testTeam
+        app:testApp
+        env:testEnv
       shouldBackfillCommits: False
       isDryRun: True
 

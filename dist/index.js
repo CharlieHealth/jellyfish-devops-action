@@ -82,7 +82,7 @@ function run() {
                 repoName: core.getInput('repoName'),
                 commitShas: core.getMultilineInput('commitShas'),
                 prs: core.getMultilineInput('prs'),
-                labels: JSON.parse(core.getInput('labels')),
+                labels: core.getMultilineInput('prs'),
                 shouldBackfillCommits: core.getBooleanInput('shouldBackfillCommits'),
                 isDryRun: core.getBooleanInput('isDryRun')
             };

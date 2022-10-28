@@ -27,6 +27,9 @@ jobs:
           repoName: test-repo
           commitShas: |
             ${{ github.sha }}
-          labels: '{"team": "testTeam"}'
+          labels: |
+            team:testTeam
+            app:testApp
+            env:testEnv
           shouldBackfillCommits: False
           isDryRun: True
