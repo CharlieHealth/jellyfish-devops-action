@@ -13,7 +13,6 @@ steps:
       apiToken: ${{ secrets.JELLYFISH_API_KEY }}
       referenceId: $GITHUB_SHA
       isSuccessful: True
-      deployedAt: 1234asdf
       repoName: test-repo
       commitShas: |
         $GITHUB_SHA

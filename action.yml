@@ -12,7 +12,7 @@ inputs:
     required: true
     description: Indicates if the deployment succesfully landed in production
   deployedAt:
-    required: true
+    required: false
     description: The timestamp of deployment completion (UTC)
   repoName:
     required: true

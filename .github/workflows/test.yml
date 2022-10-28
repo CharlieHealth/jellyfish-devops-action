@@ -24,7 +24,6 @@ jobs:
           apiToken: ${{ secrets.JELLYFISH_API_KEY }}
           referenceId: ${{ github.sha }}
           isSuccessful: True
-          deployedAt: 1234asdf
           repoName: test-repo
           commitShas: |
             ${{ github.sha }}
