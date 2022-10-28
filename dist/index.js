@@ -58,13 +58,13 @@ function report_deployment(config) {
             deployed_at: config.deployedAt,
             repo_name: config.repoName
         };
-        if (config.commitShas) {
+        if (config.commitShas && config.commitShas.length > 0) {
             body['commit_shas'] = config.commitShas;
         }
-        if (config.prs) {
+        if (config.prs && config.prs.length > 0) {
             body['prs'] = config.prs;
         }
-        if (config.labels) {
+        if (config.labels && Object.keys(config.labels).length > 0) {
             body['labels'] = config.labels;
         }
         yield axios_1.default.post(url, body, { headers });

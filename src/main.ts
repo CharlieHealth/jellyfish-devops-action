@@ -48,15 +48,15 @@ export async function report_deployment(config: ActionConfig): Promise<void> {
     repo_name: config.repoName
   }
 
-  if (config.commitShas) {
+  if (config.commitShas && config.commitShas.length > 0) {
     body['commit_shas'] = config.commitShas
   }
 
-  if (config.prs) {
+  if (config.prs && config.prs.length > 0) {
     body['prs'] = config.prs
   }
 
-  if (config.labels) {
+  if (config.labels && Object.keys(config.labels).length > 0) {
     body['labels'] = config.labels
   }
 
