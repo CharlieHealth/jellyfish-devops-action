@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import axios from 'axios'
+import axios, {AxiosError} from 'axios'
 
 export const JELLYFISH_BASE_URL = 'https://webhooks.jellyfish.co'
 export const JELLYFISH_DEPLOYMENT_RESOURCE = 'deployment'
@@ -84,7 +84,8 @@ async function run(): Promise<void> {
 
     await report_deployment(config)
   } catch (error) {
-    core.error(JSON.stringify(error, null, 2))
+    if (error instanceof AxiosError)
+      core.error(JSON.stringify(error.toJSON(), null, 2))
     if (error instanceof Error) core.setFailed(error.message)
   }
 }

@@ -34,13 +34,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.report_deployment = exports.JELLYFISH_DEPLOYMENT_RESOURCE = exports.JELLYFISH_BASE_URL = void 0;
 const core = __importStar(__nccwpck_require__(2186));
-const axios_1 = __importDefault(__nccwpck_require__(1441));
+const axios_1 = __importStar(__nccwpck_require__(1441));
 exports.JELLYFISH_BASE_URL = 'https://webhooks.jellyfish.co';
 exports.JELLYFISH_DEPLOYMENT_RESOURCE = 'deployment';
 function report_deployment(config) {
@@ -95,7 +92,8 @@ function run() {
             yield report_deployment(config);
         }
         catch (error) {
-            core.error(JSON.stringify(error, null, 2));
+            if (error instanceof axios_1.AxiosError)
+                core.error(JSON.stringify(error.toJSON(), null, 2));
             if (error instanceof Error)
                 core.setFailed(error.message);
         }
