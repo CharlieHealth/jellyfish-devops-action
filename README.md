@@ -2,7 +2,28 @@
 
 Use this action to report DevOps metrics to Jellyfish. Based on the [TypeScript Action Template](https://github.com/actions/typescript-action) and the [Jellyfish DevOps Metrics Documentation](https://app.jellyfish.co/docs/devops-metrics/)
 
-## Getting Started
+## Using the action
+
+Add the following step to your actions workflow. Details on the arguments available at https://app.jellyfish.co/docs/devops-metrics/
+
+```
+steps:
+  - uses: CharlieHealth/jellyfish-devops-action@v1
+    with:
+      apiToken: 'abc'
+      referenceId: 'xyz'
+      isSuccessful: true
+      deployedAt: 1234asdf
+      repoName: test-repo
+      commitShas: |
+        'b56432158'
+      labels: '{"team": "testTeam"}'
+      shouldBackfillCommits: false
+      isDryRun: true
+
+```
+
+## Development
 
 > First, you'll need to have a reasonably modern version of `node` handy. This won't work with versions older than 9, for instance.
 

@@ -21,4 +21,13 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./
         with:
-          milliseconds: 1000
+          apiToken: 'abc'
+          referenceId: 'xyz'
+          isSuccessful: true
+          deployedAt: 1234asdf
+          repoName: test-repo
+          commitShas: |
+            'b56432158'
+          labels: '{"team": "testTeam"}'
+          shouldBackfillCommits: false
+          isDryRun: true
