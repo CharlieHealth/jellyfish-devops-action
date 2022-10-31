@@ -19,10 +19,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Set outputs
+        id: vars
+        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
       - uses: ./
         with:
           apiToken: ${{ secrets.JELLYFISH_API_KEY }}
-          referenceId: ${{ github.sha }}
+          referenceId: test::${{ steps.vars.outputs.sha_short }}
+          name: Test deployment to staging (${{ steps.vars.outputs.sha_short }})
+          sourceUrl: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           isSuccessful: True
           repoName: test-repo
           commitShas: |

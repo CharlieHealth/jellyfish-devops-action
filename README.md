@@ -10,12 +10,14 @@ Add the following step to your actions workflow. Details on the arguments availa
 steps:
   - uses: CharlieHealth/jellyfish-devops-action@v1
     with:
+      name: Prod deployment for my-app
       apiToken: ${{ secrets.JELLYFISH_API_KEY }}
-      referenceId: $GITHUB_SHA
+      referenceId: ${{ github.sha }}
+      sourceUrl: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
       isSuccessful: True
       repoName: test-repo
       commitShas: |
-        $GITHUB_SHA
+        ${{ github.sha }}
       labels: |
         team:testTeam
         app:testApp
