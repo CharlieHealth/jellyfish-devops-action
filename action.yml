@@ -5,6 +5,13 @@ inputs:
   apiToken:
     required: true
     description: 'Your Jellyfish API Token'
+  name:
+    required: false
+    description: 'A human-readable name for a deployment'
+  sourceUrl:
+    required: false
+    description: 'URL to the external system that describes the deployment
+Examples: Jenkins, CircleCI'
   referenceId:
     required: true
     description: A unique identifier for a deployment, such as a git SHA

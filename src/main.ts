@@ -4,7 +4,9 @@ import axios, {AxiosError} from 'axios'
 export const JELLYFISH_BASE_URL = 'https://webhooks.jellyfish.co'
 export const JELLYFISH_DEPLOYMENT_RESOURCE = 'deployment'
 
-interface ActionConfig {
+export interface ActionConfig {
+  name?: string
+  sourceUrl?: string
   apiToken: string
   referenceId: string
   isSuccessful: boolean
@@ -18,6 +20,8 @@ interface ActionConfig {
 }
 
 interface RequestBody {
+  name?: string
+  source_url?: string
   reference_id: string
   is_successful: boolean
   deployed_at: string
@@ -48,6 +52,14 @@ export async function report_deployment(config: ActionConfig): Promise<void> {
     repo_name: config.repoName
   }
 
+  if (config.name) {
+    body['name'] = config.name
+  }
+
+  if (config.sourceUrl) {
+    body['source_url'] = config.sourceUrl
+  }
+
   if (config.commitShas && config.commitShas.length > 0) {
     body['commit_shas'] = config.commitShas
   }
@@ -56,7 +68,7 @@ export async function report_deployment(config: ActionConfig): Promise<void> {
     body['prs'] = config.prs
   }
 
-  if (config.labels && Object.keys(config.labels).length > 0) {
+  if (config.labels && config.labels.length > 0) {
     body['labels'] = config.labels
   }
 

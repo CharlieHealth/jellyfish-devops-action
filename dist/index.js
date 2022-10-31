@@ -58,13 +58,19 @@ function report_deployment(config) {
             deployed_at: config.deployedAt,
             repo_name: config.repoName
         };
+        if (config.name) {
+            body['name'] = config.name;
+        }
+        if (config.sourceUrl) {
+            body['source_url'] = config.sourceUrl;
+        }
         if (config.commitShas && config.commitShas.length > 0) {
             body['commit_shas'] = config.commitShas;
         }
         if (config.prs && config.prs.length > 0) {
             body['prs'] = config.prs;
         }
-        if (config.labels && Object.keys(config.labels).length > 0) {
+        if (config.labels && config.labels.length > 0) {
             body['labels'] = config.labels;
         }
         yield axios_1.default.post(url, body, { headers });
