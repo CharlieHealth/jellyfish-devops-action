@@ -4,6 +4,10 @@ import axios, {AxiosError} from 'axios'
 export const JELLYFISH_BASE_URL = 'https://webhooks.jellyfish.co'
 export const JELLYFISH_DEPLOYMENT_RESOURCE = 'deployment'
 
+export const JELLYFISH_API_KEY_HEADER = 'x-jf-api-token'
+export const JELLYFISH_BACKFILL_COMMITS_HEADER = 'x-jf-api-backfill-commits'
+export const JELLYFISH_DRY_RUN_HEADER = 'x-jf-api-dry-run'
+
 export interface ActionConfig {
   name?: string
   sourceUrl?: string
@@ -19,7 +23,7 @@ export interface ActionConfig {
   isDryRun: boolean
 }
 
-interface RequestBody {
+export interface RequestBody {
   name?: string
   source_url?: string
   reference_id: string
@@ -34,15 +38,15 @@ interface RequestBody {
 export async function report_deployment(config: ActionConfig): Promise<void> {
   const url = [JELLYFISH_BASE_URL, JELLYFISH_DEPLOYMENT_RESOURCE].join('/')
   const headers: Record<string, string | boolean | number> = {
-    'X-jf-api-token': config.apiToken
+    [JELLYFISH_API_KEY_HEADER]: config.apiToken
   }
 
   if (config.shouldBackfillCommits) {
-    headers['X-jf-api-backfill-commits'] = config.shouldBackfillCommits
+    headers[JELLYFISH_BACKFILL_COMMITS_HEADER] = config.shouldBackfillCommits
   }
 
   if (config.isDryRun) {
-    headers['X-jf-api-dry-run'] = config.isDryRun
+    headers[JELLYFISH_DRY_RUN_HEADER] = config.isDryRun
   }
 
   const body: RequestBody = {

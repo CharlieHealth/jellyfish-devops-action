@@ -35,22 +35,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.report_deployment = exports.JELLYFISH_DEPLOYMENT_RESOURCE = exports.JELLYFISH_BASE_URL = void 0;
+exports.report_deployment = exports.JELLYFISH_DRY_RUN_HEADER = exports.JELLYFISH_BACKFILL_COMMITS_HEADER = exports.JELLYFISH_API_KEY_HEADER = exports.JELLYFISH_DEPLOYMENT_RESOURCE = exports.JELLYFISH_BASE_URL = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const axios_1 = __importStar(__nccwpck_require__(1441));
 exports.JELLYFISH_BASE_URL = 'https://webhooks.jellyfish.co';
 exports.JELLYFISH_DEPLOYMENT_RESOURCE = 'deployment';
+exports.JELLYFISH_API_KEY_HEADER = 'x-jf-api-token';
+exports.JELLYFISH_BACKFILL_COMMITS_HEADER = 'x-jf-api-backfill-commits';
+exports.JELLYFISH_DRY_RUN_HEADER = 'x-jf-api-dry-run';
 function report_deployment(config) {
     return __awaiter(this, void 0, void 0, function* () {
         const url = [exports.JELLYFISH_BASE_URL, exports.JELLYFISH_DEPLOYMENT_RESOURCE].join('/');
         const headers = {
-            'X-jf-api-token': config.apiToken
+            [exports.JELLYFISH_API_KEY_HEADER]: config.apiToken
         };
         if (config.shouldBackfillCommits) {
-            headers['X-jf-api-backfill-commits'] = config.shouldBackfillCommits;
+            headers[exports.JELLYFISH_BACKFILL_COMMITS_HEADER] = config.shouldBackfillCommits;
         }
         if (config.isDryRun) {
-            headers['X-jf-api-dry-run'] = config.isDryRun;
+            headers[exports.JELLYFISH_DRY_RUN_HEADER] = config.isDryRun;
         }
         const body = {
             reference_id: config.referenceId,
