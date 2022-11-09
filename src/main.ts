@@ -76,6 +76,9 @@ export async function report_deployment(config: ActionConfig): Promise<void> {
     body['labels'] = config.labels
   }
 
+  core.info('Payload')
+  core.info(JSON.stringify(body, null, 2))
+
   await axios.post(url, body, {headers})
 }
 

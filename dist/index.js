@@ -76,6 +76,8 @@ function report_deployment(config) {
         if (config.labels && config.labels.length > 0) {
             body['labels'] = config.labels;
         }
+        core.info('Payload');
+        core.info(JSON.stringify(body, null, 2));
         yield axios_1.default.post(url, body, { headers });
     });
 }
