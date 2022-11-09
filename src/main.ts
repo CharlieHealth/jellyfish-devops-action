@@ -86,13 +86,15 @@ async function run(): Promise<void> {
   try {
     const config = {
       apiToken: core.getInput('apiToken'),
+      name: core.getInput('name'),
+      sourceUrl: core.getInput('sourceUrl'),
       referenceId: core.getInput('referenceId'),
       isSuccessful: core.getBooleanInput('isSuccessful'),
       deployedAt: core.getInput('deployedAt') || new Date().toISOString(),
       repoName: core.getInput('repoName'),
       commitShas: core.getMultilineInput('commitShas'),
       prs: core.getMultilineInput('prs'),
-      labels: core.getMultilineInput('prs'),
+      labels: core.getMultilineInput('labels'),
       shouldBackfillCommits: core.getBooleanInput('shouldBackfillCommits'),
       isDryRun: core.getBooleanInput('isDryRun')
     }
