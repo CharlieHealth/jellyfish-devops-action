@@ -15,7 +15,7 @@ steps:
       referenceId: ${{ github.sha }}
       sourceUrl: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
       isSuccessful: True
-      repoName: test-repo
+      repoName: ${{ github.event.repository.name }}
       commitShas: |
         ${{ github.sha }}
       labels: |
