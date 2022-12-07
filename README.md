@@ -8,7 +8,7 @@ Add the following step to your actions workflow. Details on the arguments availa
 
 ```
 steps:
-  - uses: CharlieHealth/jellyfish-devops-action@v1
+  - uses: CharlieHealth/jellyfish-devops-action@v1.1.1
     with:
       name: Prod deployment for my-app
       apiToken: ${{ secrets.JELLYFISH_API_KEY }}
