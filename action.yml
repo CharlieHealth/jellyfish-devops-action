@@ -42,5 +42,5 @@ Examples: Jenkins, CircleCI'
     description: 'Set to True to test your setup without actually saving events to Jellyfish '
     default: false
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'dist/index.js'
